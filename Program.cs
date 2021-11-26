@@ -7,7 +7,8 @@ namespace PasswordGenerator
     {
         static void Main(string[] args)
         {
-            List<int> numbers = new List<int>();
+            string input = string.Empty;
+            bool[] options = new bool[5];
 
             int choice = default;
 
@@ -15,15 +16,27 @@ namespace PasswordGenerator
             int.TryParse(Console.ReadLine(), out int passwordLength);
 
 
-            while (choice == 0 || choice > 5)
+            while (input != "<")
             {
+                Console.Clear();
+
+                Console.WriteLine("[1] Digits\n" +
+                                  "[2] Little letters\n" +
+                                  "[3] Big letters\n" +
+                                  "[4] Special Symbols\n" +
+                                  "[5] Avoid duplicates\n");
+
                 Console.WriteLine("What do you want to use in the password?");
-                string input = Console.ReadLine();
-                int.TryParse(input, out choice);
+                input = Console.ReadLine();
 
-                numbers.Add(choice);
+                if (int.TryParse(input, out choice))
+                    options[choice - 1] = true;
 
-                if (input == "<") break;
+                int counterOfOptions = default;
+                for (int i = 0; i < options.Length; i++)
+                    if (options[i]) counterOfOptions++;
+
+                if (counterOfOptions == 5) break;
             }
         }
     }
