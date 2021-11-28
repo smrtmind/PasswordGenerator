@@ -6,6 +6,8 @@ namespace PasswordGenerator
 {
     class Program
     {
+        public static char[] password;
+        public static List<char> accumulatedArray;
         public static Random random = new Random();
 
         static void Main(string[] args)
@@ -19,7 +21,6 @@ namespace PasswordGenerator
             while (input != "y")
             {
                 int passwordLength = default;
-                char[] password;
                 bool[] options = new bool[Source.functions.Length];
 
                 do
@@ -73,7 +74,7 @@ namespace PasswordGenerator
                         else break;
                     }
 
-                    List<char> accumulatedArray = new List<char>();
+                    accumulatedArray = new List<char>();
                     //accumulating an array according to chosen options
                     for (int i = 0; i < options.Length - 1; i++)
                     {
@@ -97,7 +98,7 @@ namespace PasswordGenerator
 
                         else
                         {
-                            password = UnicSymbols.Get(password, accumulatedArray);
+                            password = GetUnicArray();
                             break;
                         }
 
@@ -122,6 +123,19 @@ namespace PasswordGenerator
                 }
                 while (input != "y" && input != "n");
             }
+        }
+
+        private static char[] GetUnicArray()
+        {
+            for (int i = 0; i < password.Length; i++)
+            {
+                int index = random.Next(0, accumulatedArray.Count);
+
+                password[i] = accumulatedArray[index];
+                accumulatedArray.Remove(accumulatedArray[index]);
+            }
+
+            return password;
         }
     }
 }
