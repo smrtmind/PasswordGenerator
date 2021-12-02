@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 
 namespace PasswordGenerator
@@ -98,10 +99,9 @@ namespace PasswordGenerator
 
                         else
                         {
-                            password = GetUnicArray();
+                            password = GetUnicSymbols();
                             break;
                         }
-
                     }
 
                     //if you don't mind about duplicates
@@ -114,7 +114,9 @@ namespace PasswordGenerator
                 }
 
                 Print.Text($"\n Output: ", ConsoleColor.DarkBlue);
-                Print.Text($"{new string(password)}\n\n");
+                Print.Text($"{new string(password)}\n");
+                Print.Text($" file with password was created on your desktop\n\n", ConsoleColor.DarkGray);
+                File.WriteAllText(@"C:\Users\[name_of_the_user]\Desktop\password.txt", new string(password));
 
                 do
                 {
@@ -125,7 +127,7 @@ namespace PasswordGenerator
             }
         }
 
-        private static char[] GetUnicArray()
+        private static char[] GetUnicSymbols()
         {
             for (int i = 0; i < password.Length; i++)
             {
